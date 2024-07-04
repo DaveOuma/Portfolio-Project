@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Projects</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="icon" href="favicon.png">
+</head>
+<body>
+    <h1>My Projects</h1>
+    <ul>
+        {% for project in projects %}
+        <li>
+            <h2>{{ project.title }}</h2>
+            <p>{{ project.description }}</p>
+            <p><strong>Technology:</strong> {{ project.technology }}</p>
+            <img src="{{ project.image.url }}" alt="{{ project.title }}">
+            {% if project.url %}
+            <p><a href="{{ project.url }}">Project Link</a></p>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

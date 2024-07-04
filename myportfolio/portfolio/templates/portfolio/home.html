@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>My Portfolio</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="icon" href="favicon.png">
+</head>
+<body>
+    <h1>Welcome to My Portfolio</h1>
+    <nav>
+        <a href="{% url 'portfolio:home' %}">Home</a>
+        <a href="{% url 'portfolio:projects' %}">Projects</a>
+        {% comment %} <a href="{% url 'portforlio:skills' %}">Skills</a>
+        <a href="{% url 'portfolio:contact' %}">Contact</a> {% endcomment %}
+    </nav>
+</body>
+</html>
