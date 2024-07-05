@@ -1,29 +1,32 @@
-import subprocess
-from django.shortcuts import HttpResponse, redirect, render
+# import subprocess
+from .tasks import execute_calculator, print_current_time
+from django.http import JsonResponse
+from django.shortcuts import redirect, render
 from .models import Project, Skill
 from .forms import ContactForm
+from celery.result import AsyncResult
 
 # Create your views here.
 
-def home(request):
-    try:
-        result = subprocess.run(['c_programs/calculator.exe'], capture_output=True, text=True, timeout=10)  # Increase timeout as needed
-    except subprocess.TimeoutExpired:
-        return HttpResponse("Execution timed out. Please try again later.")
-    except FileNotFoundError:
-        return HttpResponse("Executable file not found.")
-    except Exception as e:
-        return HttpResponse(f"An error occurred: {e}")
+# def home(request):
+#     try:
+#         result = subprocess.run(['c_programs/calculator.exe'], capture_output=True, text=True, timeout=10)  # Increase timeout as needed
+#     except subprocess.TimeoutExpired:
+#         return HttpResponse("Execution timed out. Please try again later.")
+#     except FileNotFoundError:
+#         return HttpResponse("Executable file not found.")
+#     except Exception as e:
+#         return HttpResponse(f"An error occurred: {e}")
 
-    if result.returncode != 0:
-        return HttpResponse(f"Execution failed with return code {result.returncode}")
+#     if result.returncode != 0:
+#         return HttpResponse(f"Execution failed with return code {result.returncode}")
 
-    output = result.stdout
+#     output = result.stdout
 
-    context = {
-        'output': output
-    }
-    return render(request, 'portfolio/home.html', context)
+#     context = {
+#         'output': output
+#     }
+#     return render(request, 'portfolio/home.html', context)
 
 
 # def home(request): 
@@ -50,6 +53,28 @@ def home(request):
 #         'output': output
 #     }
 #     return render(request, 'portfolio/home.html', context)
+
+def home(request):
+    task_result = execute_calculator.delay() #This triggers the Celery task asynchronously
+    
+    print_current_time.delay()
+    
+    context = {
+        'task_id': task_result.id
+    }
+    return render(request, 'portfolio/home.html', context)
+#Error handling the Task Result
+def get_task_status(request, task_id):
+    task = execute_calculator.AsyncResult(task_id)
+    
+    if task.state == 'SUCCESS':
+        output = task.get()
+        return JsonResponse({'status': 'success', 'output': output})
+    elif task.state == "FAILURE":
+        return JsonResponse({'status': 'failure', 'message': 'Task failed to execute'})
+    else:
+        return JsonResponse({'status': 'pending'})
+    
 
 def projects(request):
     projects = Project.objects.all()
