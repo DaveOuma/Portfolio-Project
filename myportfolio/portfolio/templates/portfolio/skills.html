@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>My Portfolio</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="icon" href="favicon.png">
+    <link rel="stylesheet" type="text/css" href="{% static 'portfolio/styles.css' %}">
+</head>
+<body>
+    <h1>Skills</h1>
+    
+    <nav>
+        <a href="{% url 'portfolio:home' %}"><h3>Home</h3></a>
+        <a href="{% url 'portfolio:projects' %}"><h3>Projects</h3></a>
+        <a href="{% url 'portfolio:skills' %}"><h3>Skills</h3></a>
+        <a href="{% url 'portfolio:contact' %}"><h3>Contact</h3></a> 
+    </nav>
+
+    <ul>
+        <li>C: Proficient in writing efficient and optimized C code, including data structures and memory management.</li>
+        <li>HTML & CSS: Skilled in creating visually appealing and responsive web pages with cross-browser compatibility.</li>
+        <li>JavaScript: Experienced in creating interactive web elements, handling events, and manipulating the DOM.</li>
+        <li>Python: Capable of writing modular code and utilizing extensive libraries for various applications.</li>
+        <li>Django: Experienced in developing web applications using the Django framework, including template rendering, models, and views.</li>
+    </ul>
+</body>
+</html>

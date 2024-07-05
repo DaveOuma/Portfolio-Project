@@ -13,7 +13,7 @@ class Project(models.Model):
     
 class Skill(models.Model):
     name = models.CharField(max_length=100)
-    level = models.CharField(max_length=100)
+    level = models.CharField(max_length=100) #e.g., stating whether in Beginner, Intermediate, or Advanced levels
     
     def __str__(self):
         return self.name
@@ -21,7 +21,7 @@ class Skill(models.Model):
 class Contact(models.Model):
     name = models.CharField(max_length=150)
     email = models.EmailField()
-    message = models.TextField
+    message = models.TextField()
     
     def __str__(self):
         return self.name

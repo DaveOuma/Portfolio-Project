@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -5,9 +6,18 @@
     <title>Projects</title>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <link rel="icon" href="favicon.png">
+    <link rel="stylesheet" type="text/css" href="{% static 'portfolio/styles.css' %}">
 </head>
 <body>
     <h1>My Projects</h1>
+    <nav>
+        <nav>
+            <a href="{% url 'portfolio:home' %}"><h3>Home</h3></a>
+            <a href="{% url 'portfolio:projects' %}"><h3>Projects</h3></a>
+            <a href="{% url 'portfolio:skills' %}"><h3>Skills</h3></a>
+            <a href="{% url 'portfolio:contact' %}"><h3>Contact</h3></a> 
+        </nav> 
+    </nav>
     <ul>
         {% for project in projects %}
         <li>
