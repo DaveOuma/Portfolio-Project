@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'portfolio',
+    'django_celery_results',
 ]
 
 MIDDLEWARE = [
@@ -131,20 +132,31 @@ STATICFILES_DIRS = [
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# Celery Configuration Options
-CELERY_BROKER_URL = 'redis://127.0.0.1:6379/0'
-CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379/0'
-CELERY_ACCEPT_CONTENT = ['json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
-# CELERY_TIMEZONE = 'UTC'
-CELERY_TIMEZONE = 'Africa/Nairobi'
 
-#Celery configuration
-CELERY_BROKER_URL = 'redis://127.0.0.1:6379/0' #Replace with your Redis URL
-CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379/0'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Celery Configuration Options/Celery settings
+CELERY_BROKER_URL = 'redis://127.0.0.1:6379'
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+# CELERY_TIMEZONE = 'UTC'
+CELERY_TIMEZONE = 'Africa/Nairobi'
+
+
+# Celery settings
+CELERY_CACHE_BACKEND = 'django-cache'
+CELERY_RESULT_BACKEND = 'django-db'
+
+# Ensure you have the following configurations
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'my_cache_table',
+    }
+}

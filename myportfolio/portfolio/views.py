@@ -4,7 +4,7 @@ from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from .models import Project, Skill
 from .forms import ContactForm
-from celery.result import AsyncResult
+
 
 # Create your views here.
 
@@ -57,7 +57,7 @@ from celery.result import AsyncResult
 def home(request):
     task_result = execute_calculator.delay() #This triggers the Celery task asynchronously
     
-    print_current_time.delay()
+    # print_current_time.delay()
     
     context = {
         'task_id': task_result.id
@@ -95,12 +95,11 @@ def contact(request):
         form = ContactForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('portfolio/skills.html')
+            return redirect('portfolio:skills')
     else:
         form = ContactForm()
-    
+
     context = {
         'form': form
     }
     return render(request, 'portfolio/contact.html', context)
-    

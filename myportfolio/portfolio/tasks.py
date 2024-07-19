@@ -1,12 +1,12 @@
 from celery import shared_task
 import subprocess
-from django.utils import timezone
+from datetime import datetime
 
-@shared_task
-def execute_calculator():
+@shared_task(bind=True)
+def execute_calculator(self):
     #Executing the c calculator program
     try:
-        result = subprocess.run(['c_programs/calculator.exe'], capture_output=True, text=True, timeout=30)
+        result = subprocess.run(['c_programs/calculator.exe'], capture_output=True, text=True, timeout=10)
         output = result.stdout
         return output
     except subprocess.TimeoutExpired:
@@ -15,5 +15,6 @@ def execute_calculator():
         return f"An error ocurred: {e}"
 
 def print_current_time():
-    current_time = timezone.now()
-    print(f"current time: {current_time}")
+    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    print(f"Current time: {current_time}")
+    return current_time
