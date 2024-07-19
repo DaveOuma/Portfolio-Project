@@ -16,6 +16,9 @@ app.config_from_object(settings, namespace='CELERY')
 
 
 #Celery Beat Settings
+app.conf.beat_schedule = {
+    
+}
 # app.autodiscover_tasks()
 app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
 

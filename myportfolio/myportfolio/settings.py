@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'portfolio',
     'django_celery_results',
+    'django_celery_beat',
 ]
 
 MIDDLEWARE = [
@@ -160,3 +161,6 @@ CACHES = {
         'LOCATION': 'my_cache_table',
     }
 }
+
+#CELERY BEAT
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
