@@ -1,8 +1,10 @@
 from django.db import models
 
-# Create your models here.
 class Project(models.Model):
-    title = models.CharField(max_length= 150)
+    """
+    Model representing a project.
+    """
+    title = models.CharField(max_length=150)
     description = models.TextField()
     technology = models.CharField(max_length=100)
     image = models.ImageField(upload_to='images/')
@@ -10,15 +12,21 @@ class Project(models.Model):
     
     def __str__(self):
         return self.title
-    
+
 class Skill(models.Model):
+    """
+    Model representing a skill.
+    """
     name = models.CharField(max_length=100)
-    level = models.CharField(max_length=100) #e.g., stating whether in Beginner, Intermediate, or Advanced levels
+    level = models.CharField(max_length=100)  # e.g., Beginner, Intermediate, Advanced
     
     def __str__(self):
         return self.name
 
 class Contact(models.Model):
+    """
+    Model representing a contact submission.
+    """
     name = models.CharField(max_length=150)
     email = models.EmailField()
     message = models.TextField()

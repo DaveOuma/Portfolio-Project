@@ -1,20 +1,32 @@
 from celery import shared_task
-import subprocess
 from datetime import datetime
+from time import sleep
+import logging
 
 @shared_task(bind=True)
 def execute_calculator(self):
-    #Executing the c calculator program
+    """
+    Asynchronous task to execute a basic calculator.
+    """
     try:
-        result = subprocess.run(['c_programs/calculator.exe'], capture_output=True, text=True, timeout=10)
-        output = result.stdout
-        return output
-    except subprocess.TimeoutExpired:
-        return "Execution timed out. Please try again later."
+        result = "4 + 4 = 8\n5 - 3 = 2\n"  # Example output from a basic calculator
+        return result
     except Exception as e:
-        return f"An error ocurred: {e}"
+        return f"An error occurred: {e}"
 
 def print_current_time():
+    """
+    Function to print and return the current time.
+    """
     current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     print(f"Current time: {current_time}")
     return current_time
+
+logger = logging.getLogger(__name__)
+@shared_task(bind=True)
+def long_running_task(self, param1):
+    logger.info(f'Starting task with param1: {param1}')
+    sleep(10)  # Simulating a long-running task
+    result = f'Task completed with {param1}'
+    logger.info(f'Task result: {result}')
+    return result

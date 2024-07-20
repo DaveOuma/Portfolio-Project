@@ -3,11 +3,10 @@
 <html>
 <head>
     <meta charset="UTF-8" />
-    <title>My Portfolio</title>
+    <title>Home</title>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <link rel="icon" href="favicon.png">
     <link rel="stylesheet" type="text/css" href="{% static 'portfolio/styles.css' %}">
-    <script src="{% static 'portfolio/task_status.js' %}"></script>
 </head>
 <body>
     <h1>Welcome to My Portfolio</h1>
@@ -15,13 +14,10 @@
         <a href="{% url 'portfolio:home' %}"><h3>Home</h3></a>
         <a href="{% url 'portfolio:projects' %}"><h3>Projects</h3></a>
         <a href="{% url 'portfolio:skills' %}"><h3>Skills</h3></a>
-        <a href="{% url 'portfolio:contact' %}"><h3>Contact</h3></a> 
+        <a href="{% url 'portfolio:contact' %}"><h3>Contact</h3></a>
     </nav>
-    
-    {% comment %} <pre>{{ output }}</pre> {% endcomment %}
+    <p>Task ID: {{ task_id }}</p>
     <div id="task-id" style="display:none;">{{ task_id }}</div>
-    <div id="output">Waiting for result...</div>
-
-
+    <script src="{% static 'portfolio/task_status.js' %}"></script>
 </body>
 </html>
